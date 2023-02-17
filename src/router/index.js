@@ -1,11 +1,19 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import UserLogin from '../UserLogin/UserLogin'
+import UserLogin from '../UserLogin/UserLogin.vue'
+// import UserLogin from '@/UserLogin/UserLogin'
+import HelloWorld from '../components/HelloWorld.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'UserLogin',
     component: UserLogin
+  }
+  ,
+  {
+    path: '/home',
+    name: 'HelloWorld',
+    component: HelloWorld
   }
 ]
 
@@ -14,18 +22,19 @@ const router = createRouter({
   routes
 })
 
-// //路由守卫，在执行路由前执行本方法来做认证操作
-// // to:要去的路径,from:获取从那个页面路径跳转而来的,next:放行
-// router.beforeEach((to,from,next)=>{
-//   // 判断当前路径是否为login ，如果是true 着放行
-//   if(to.path==="/login") return next();
-//   //获取当前token
-//   const token=window.sessionStorage.getItem("token");
-//   //如果当前token为空，着返回到login页面
-//   if(!token)return next("/login");
-//   //如果上面全部都过了，那么执行放行
-//   next();
-//  })
+// 挂载路由导航守卫
+router.beforeEach((to, from, next) => {
+  // to 将要访问的路径
+  // from 代表从哪个路径跳转而来
+  // next 是一个函数，表示放行
+  //     next()  放行    next('/login')  强制跳转
+ 
+  if (to.path === '/login') return next()
+  // 获取token
+  const tokenStr = window.sessionStorage.getItem('token')
+  if (!tokenStr) return next('/login')
+  next()
+})
  
 
 export default router
