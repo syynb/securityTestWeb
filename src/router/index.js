@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import UserLogin from '../UserLogin/UserLogin.vue'
 // import UserLogin from '@/UserLogin/UserLogin'
-import HelloWorld from '../components/HelloWorld.vue'
+import Controller from '../Controller/Controller.vue'
 
 const routes = [
   {
@@ -12,8 +12,8 @@ const routes = [
   ,
   {
     path: '/home',
-    name: 'HelloWorld',
-    component: HelloWorld
+    name: 'Controller',
+    component: Controller
   }
 ]
 
@@ -31,8 +31,8 @@ router.beforeEach((to, from, next) => {
  
   if (to.path === '/login') return next()
   // 获取token
-  const tokenStr = window.sessionStorage.getItem('token')
-  if (!tokenStr) return next('/login')
+  // const tokenStr = window.sessionStorage.getItem('token')
+  // if (!tokenStr) return next('/login')
   next()
 })
  
