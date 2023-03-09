@@ -1,31 +1,34 @@
 <template>
-  <div class="login_container">
-    <div class="login_box">
-      <!-- 头像区域 -->
-      <div class="avatar_box">
-        <img src="../assets/logo.png" alt="">
+  <RouterView>
+    <div class="login_container">
+      <div class="login_box">
+        <!-- 头像区域 -->
+        <div class="avatar_box">
+          <img src="../assets/logo.png" alt="">
+        </div>
+        <!-- 登录表单区域 -->
+        <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
+          <!-- 用户名 -->
+          <el-form-item prop="loginForm">
+            <el-input v-model="loginForm.userName"></el-input>
+          
+          <!-- 密码 -->
+          
+            <el-input v-model="loginForm.password" type="password"></el-input>
+          </el-form-item>
+          <!-- 按钮区域 -->
+          <el-form-item class="btns">
+            <el-button type="primary" @click="login">登录</el-button>
+            <el-button type="primary" @click="register">注册</el-button>
+          </el-form-item>
+        </el-form>
       </div>
-      <!-- 登录表单区域 -->
-      <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
-        <!-- 用户名 -->
-        <el-form-item prop="loginForm">
-          <el-input v-model="loginForm.userName"></el-input>
-        
-        <!-- 密码 -->
-        
-          <el-input v-model="loginForm.password" type="password"></el-input>
-        </el-form-item>
-        <!-- 按钮区域 -->
-        <el-form-item class="btns">
-          <el-button type="primary" @click="login">登录</el-button>
-          <el-button type="primary" @click="register">注册</el-button>
-        </el-form-item>
-      </el-form>
     </div>
-  </div>
+  </RouterView>
 </template>
  
 <script>
+import router from '@/router/index.js'
 export default {
   data() {
     return {
@@ -58,7 +61,7 @@ export default {
         if (res.code !== 666) return this.$message.error(res.message)
         this.$message.success('注册成功')
         // 2. 通过编程式导航跳转到后台主页，路由地址是 /home
-        this.$router.push('/login')
+        router.push('/login')
       })
     },
     login() {
@@ -72,7 +75,7 @@ export default {
         //   1.2 token 只应在当前网站打开期间生效，所以将 token 保存在 sessionStorage 中
         // window.sessionStorage.setItem('token', res.data.token)
         // 2. 通过编程式导航跳转到后台主页，路由地址是 /home
-        this.$router.push('/home')
+        router.push({name:'Controller'})
       })
     }
   }
